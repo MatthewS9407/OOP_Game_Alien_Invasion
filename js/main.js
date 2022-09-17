@@ -2,12 +2,13 @@ class Game {
     constructor(){
         this.player = null;
         this.aliens = [];
+        this.bullets = Bullets;
     }
     start(){
         this.player = new Player();
         this.attachEventListeners();
 
-        const createAliens = setInterval(() => {
+        const spawnAliens = setInterval(() => {
             const newAlien = new Alien();
             this.aliens.push(newAlien);
         }, 1500)
@@ -21,7 +22,7 @@ class Game {
         }, 50);
 
         setTimeout ( () => {
-            clearInterval(createAliens);
+            clearInterval(spawnAliens);
         }, 60000)
 
     }
@@ -33,6 +34,12 @@ class Game {
                 this.player.moveRight();
             }
         });
+        document.addEventListener("keydown", (event) => {
+            if(event.key === "Space") {
+                new Bullets;
+                this.bullets.shoot();
+            }
+        })
     }
     detectCollision(alienInstance){
         if (
@@ -114,6 +121,36 @@ class Alien {
         this.domElement.style.bottom = this.positionY + 'vh';
     }
 }
+
+class Bullets {
+    constructor(){
+        this.width = 0.5;
+        this.height = 0.5;
+        this.positionX = Player.positionX+25;
+        this.positionY = Player.positionY;
+        this.domElement = null;
+
+        this.createDomElement();
+    }
+    createDomElement(){
+        this.domElement = document.createElement('div');
+        this.domElement.className = 'bullet';
+        this.domElement.style.width = this.width + 'vw';
+        this.domElement.style.height = this.height + 'vh';
+        this.domElement.style.bottom = this.positionY + 'vh';
+        this.domElement.style.left = this.positionX + 'vw';
+
+        const boardElm = document.getElementById('board');
+        boardElm.appendChild(this.domElement);
+    }
+    shoot(){
+        this.positionY = this.positionY + 3;
+        this.domElement.style.bottom = this.positionY + 'vh';
+        console.log('shoot')
+    }
+}
+
+class Boss {}
 
 
 const game = new Game();
