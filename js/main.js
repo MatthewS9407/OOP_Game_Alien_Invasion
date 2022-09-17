@@ -41,6 +41,7 @@ class Game {
                 setInterval(() => {
                 this.bullets.forEach((bulletInstance) => {
                     bulletInstance.shoot();
+                    bulletOutside(bulletInstance);
                 });
             }, 100)
             }
@@ -61,6 +62,12 @@ class Game {
         if(alienInstance.positionY < 0){
             alienInstance.domElement.remove();
             this.aliens.shift();
+        }
+    }
+    bulletOutside(bulletInstance){
+        if(bulletInstance.positionY > 100){
+            bulletInstance.domElement.remove();
+            this.bullets.shift();
         }
     }
 }
