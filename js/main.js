@@ -7,9 +7,16 @@ class Game {
         this.player = new Player();
         this.attachEventListeners();
 
-        setInterval(() => {
 
-        })
+    }
+    attachEventListeners(){
+        document.addEventListener("keydown", (event) => {
+            if(event.key === "ArrowLeft"){
+                this.player.moveLeft();
+            }else if(event.key === "ArrowRight"){
+                this.player.moveRight();
+            }
+        });
     }
 }
 
@@ -35,7 +42,16 @@ class Player {
         boardElm.appendChild(this.domElement)
     }
     moveLeft(){
-
+        if (this.positionX > 0) {
+            this.positionX = this.positionX - 2;
+            this.domElement.style.left = this.positionX + 'vw';
+        }
+    }
+    moveRight(){
+        if (this.positionX < 89.5) {
+            this.positionX = this.positionX - 2;
+            this.domElement.style.left = this.positionX + "vw";
+        }
     }
 }
 
