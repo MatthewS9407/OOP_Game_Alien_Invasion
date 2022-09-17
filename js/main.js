@@ -1,12 +1,23 @@
 class Game {
     constructor(){
         this.player = null;
-        this.obstacles = [];
+        this.aliens = [];
     }
     start(){
         this.player = new Player();
         this.attachEventListeners();
 
+        setInterval(() => {
+            const newAlien = new Alien();
+            this.aliens.push(newAlien);
+        }, 1000)
+
+        setInterval(() => {
+            this.aliens.forEach((alienInstance) => {
+                alienInstance.moveDown();
+                this.removeAlienIfOutside(alienInstance);
+            });
+        }, 50);
 
     }
     attachEventListeners(){
@@ -17,6 +28,12 @@ class Game {
                 this.player.moveRight();
             }
         });
+    }
+    removeAlienIfOutside(alienInstance){
+        if(alienInstance.positionY < 0) {
+            alienInstance.domElement.remove();
+            this.aliens.shift();
+        }
     }
 }
 
@@ -49,7 +66,7 @@ class Player {
     }
     moveRight(){
         if (this.positionX < 89.5) {
-            this.positionX = this.positionX - 2;
+            this.positionX = this.positionX + 2;
             this.domElement.style.left = this.positionX + "vw";
         }
     }
