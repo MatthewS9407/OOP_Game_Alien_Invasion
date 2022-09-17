@@ -2,7 +2,7 @@ class Game {
     constructor(){
         this.player = null;
         this.aliens = [];
-        this.bullets = Bullets;
+        this.bullets = [];
     }
     start(){
         this.player = new Player();
@@ -16,7 +16,7 @@ class Game {
         setInterval(() => {
             this.aliens.forEach((alienInstance) => {
                 alienInstance.moveDown();
-                this.detectCollision(alienInstance); 
+                this.detectCollisionPlayerAlien(alienInstance); 
                 this.alienOutside(alienInstance); 
             });
         }, 50);
@@ -35,13 +35,18 @@ class Game {
             }
         });
         document.addEventListener("keydown", (event) => {
-            if(event.key === "Space") {
-                new Bullets;
-                this.bullets.shoot();
+            if(event.key === " ") {
+                const newBullet = new Bullet;
+                this.bullets.push(newBullet);
+                setInterval(() => {
+                this.bullets.forEach((bulletInstance) => {
+                    bulletInstance.shoot();
+                });
+            }, 100)
             }
         })
     }
-    detectCollision(alienInstance){
+    detectCollisionPlayerAlien(alienInstance){
         if (
             this.player.positionX < alienInstance.positionX + alienInstance.width &&
             this.player.positionX + this.player.width > alienInstance.positionX &&
@@ -122,12 +127,12 @@ class Alien {
     }
 }
 
-class Bullets {
+class Bullet {
     constructor(){
         this.width = 0.5;
-        this.height = 0.5;
-        this.positionX = Player.positionX+25;
-        this.positionY = Player.positionY;
+        this.height = 2;
+        this.positionX = 25;
+        this.positionY = 0;
         this.domElement = null;
 
         this.createDomElement();
