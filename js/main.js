@@ -7,17 +7,22 @@ class Game {
         this.player = new Player();
         this.attachEventListeners();
 
-        setInterval(() => {
+        const createAliens = setInterval(() => {
             const newAlien = new Alien();
             this.aliens.push(newAlien);
-        }, 1000)
+        }, 1500)
 
         setInterval(() => {
             this.aliens.forEach((alienInstance) => {
                 alienInstance.moveDown();
-                this.removeAlienIfOutside(alienInstance);
+                this.detectCollision(alienInstance); 
+                this.alienOutside(alienInstance); 
             });
         }, 50);
+
+        setTimeout ( () => {
+            clearInterval(createAliens);
+        }, 60000)
 
     }
     attachEventListeners(){
@@ -29,8 +34,19 @@ class Game {
             }
         });
     }
-    removeAlienIfOutside(alienInstance){
-        if(alienInstance.positionY < 0) {
+    detectCollision(alienInstance){
+        if (
+            this.player.positionX < alienInstance.positionX + alienInstance.width &&
+            this.player.positionX + this.player.width > alienInstance.positionX &&
+            this.player.positionY < alienInstance.positionY + alienInstance.height &&
+            this.player.height + this.player.positionY > alienInstance.positionY
+        ) {
+            console.log("game over....")
+            location.href = 'gameover.html';
+        }
+    }
+    alienOutside(alienInstance){
+        if(alienInstance.positionY < 0){
             alienInstance.domElement.remove();
             this.aliens.shift();
         }
