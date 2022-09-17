@@ -13,3 +13,8 @@ body {
     background-color: aliceblue;
     position: absolute;
 }
+
+.alien {
+    background-color: aquamarine;
+    position:absolute;
+}

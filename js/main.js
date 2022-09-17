@@ -55,6 +55,33 @@ class Player {
     }
 }
 
+class Alien {
+    constructor(){
+        this.width = 5;
+        this.height = 2.5;
+        this.positionX = Math.floor(Math.random() * (100 - this.width + 1));
+        this.positionY = 90;
+        this.domElement = null;
+
+        this.createDomElement();
+    }
+    createDomElement(){
+        this.domElement = document.createElement('div');
+        this.domElement.className = 'alien';
+        this.domElement.style.width = this.width + 'vw';
+        this.domElement.style.height = this.height + 'vh';
+        this.domElement.style.bottom = this.positionY + 'vh';
+        this.domElement.style.left = this.positionX + 'vw';
+
+        const boardElm = document.getElementById('board');
+        boardElm.appendChild(this.domElement);
+    }
+    moveDown(){
+        this.positionY--;
+        this.domElement.style.bottom = this.positionY + 'vh';
+    }
+}
+
 
 const game = new Game();
 game.start();
