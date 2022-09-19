@@ -41,7 +41,6 @@ class Game {
                 setInterval(() => {
                 this.bullets.forEach((bulletInstance) => {
                     bulletInstance.shoot();
-                    bulletOutside(bulletInstance);
                 });
             }, 100)
             }
@@ -64,22 +63,16 @@ class Game {
             this.aliens.shift();
         }
     }
-    bulletOutside(bulletInstance){
-        if(bulletInstance.positionY > 100){
-            bulletInstance.domElement.remove();
-            this.bullets.shift();
-        }
-    }
 }
 
 class Player {
-    constructor (){
+    constructor (width, height, positionX, positionY){
         this.width = 10;
         this.height = 10;
         this.positionX = 50;
         this.positionY = 5;
         this.domElement = null;
-
+  
         this.createDomElement();
     }
     createDomElement(){
@@ -89,7 +82,7 @@ class Player {
         this.domElement.style.height = this.height + 'vh';
         this.domElement.style.bottom = this.positionY + 'vh';
         this.domElement.style.left = this.positionX + 'vw';
-
+  
         const boardElm = document.getElementById("board");
         boardElm.appendChild(this.domElement)
     }
@@ -105,16 +98,16 @@ class Player {
             this.domElement.style.left = this.positionX + "vw";
         }
     }
-}
-
-class Alien {
+  }
+  
+  class Alien {
     constructor(){
         this.width = 5;
         this.height = 2.5;
         this.positionX = Math.floor(Math.random() * (100 - this.width + 1));
         this.positionY = 90;
         this.domElement = null;
-
+  
         this.createDomElement();
     }
     createDomElement(){
@@ -124,7 +117,7 @@ class Alien {
         this.domElement.style.height = this.height + 'vh';
         this.domElement.style.bottom = this.positionY + 'vh';
         this.domElement.style.left = this.positionX + 'vw';
-
+  
         const boardElm = document.getElementById('board');
         boardElm.appendChild(this.domElement);
     }
@@ -132,16 +125,16 @@ class Alien {
         this.positionY--;
         this.domElement.style.bottom = this.positionY + 'vh';
     }
-}
-
-class Bullet {
+  }
+  
+  class Bullet {
     constructor(){
         this.width = 0.5;
         this.height = 2;
-        this.positionX = 25;
-        this.positionY = 0;
+        this.positionX = 5;
+        this.positionY = 1;
         this.domElement = null;
-
+  
         this.createDomElement();
     }
     createDomElement(){
@@ -151,19 +144,19 @@ class Bullet {
         this.domElement.style.height = this.height + 'vh';
         this.domElement.style.bottom = this.positionY + 'vh';
         this.domElement.style.left = this.positionX + 'vw';
-
-        const boardElm = document.getElementById('board');
-        boardElm.appendChild(this.domElement);
+  
+        const playerElm = document.getElementById('player');
+        playerElm.appendChild(this.domElement);
     }
     shoot(){
         this.positionY = this.positionY + 3;
         this.domElement.style.bottom = this.positionY + 'vh';
         console.log('shoot')
     }
-}
-
-class Boss {}
-
-
-const game = new Game();
-game.start();
+  }
+  
+  class Boss {}
+  
+  
+  const game = new Game();
+  game.start();
