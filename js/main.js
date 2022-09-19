@@ -1,5 +1,6 @@
 class Game {
     constructor(){
+        this.time = 0
         this.player = null;
         this.aliens = [];
         this.bullets = [];
@@ -17,6 +18,7 @@ class Game {
             this.aliens.forEach((alienInstance) => {
                 alienInstance.moveDown();
                 this.detectCollisionPlayerAlien(alienInstance); 
+                //this.detectCollisionBulletAlien(alienInstance);
                 this.alienOutside(alienInstance); 
             });
         }, 50);
@@ -36,11 +38,14 @@ class Game {
         });
         document.addEventListener("keydown", (event) => {
             if(event.key === " ") {
+                //this.player.fire();
+                //const newBullet = new Bullet(this.player.positionX)
                 const newBullet = new Bullet;
                 this.bullets.push(newBullet);
                 setInterval(() => {
                 this.bullets.forEach((bulletInstance) => {
                     bulletInstance.shoot();
+                    this.bulletOutside(bulletInstance);
                 });
             }, 100)
             }
@@ -54,25 +59,42 @@ class Game {
             this.player.height + this.player.positionY > alienInstance.positionY
         ) {
             console.log("game over....")
-            location.href = 'gameover.html';
+            //location.href = 'gameover.html';
         }
     }
+    //detectCollisionBulletAlien(alienInstance){
+    //    let 'bulletElm' = getElementByClassName('bullet');
+    //        if (
+    //            bulletElm.positionX < alienInstance.positionX + alienInstance.width &&
+    //            bulletElm.positionX + bulletElm.width > alienInstance.positionX &&
+    //            bulletElm.positionY < alienInstance.positionY + alienInstance.height &&
+    //            bulletElm.height + bulletElm.positionY > alienInstance.positionY
+    //        ) {
+    //            console.log("hit....")
+    //        }
+    //  }
     alienOutside(alienInstance){
         if(alienInstance.positionY < 0){
             alienInstance.domElement.remove();
             this.aliens.shift();
         }
     }
+    bulletOutside(bulletInstance){
+        if(bulletInstance.positionY > 100){
+            bulletInstance.domElement.remove();
+            this.bullets.shift();
+        }
+    }
 }
 
 class Player {
-    constructor (width, height, positionX, positionY){
+    constructor (){
         this.width = 10;
         this.height = 10;
         this.positionX = 50;
         this.positionY = 5;
         this.domElement = null;
-  
+        this.time = 0;
         this.createDomElement();
     }
     createDomElement(){
@@ -98,6 +120,10 @@ class Player {
             this.domElement.style.left = this.positionX + "vw";
         }
     }
+    //fire(){
+    //    const newBullet = new Bullet(this.positionX)
+    //    
+    //}
   }
   
   class Alien {
@@ -128,7 +154,7 @@ class Player {
   }
   
   class Bullet {
-    constructor(){
+    constructor(position){
         this.width = 0.5;
         this.height = 2;
         this.positionX = 5;
@@ -153,9 +179,18 @@ class Player {
         this.domElement.style.bottom = this.positionY + 'vh';
         console.log('shoot')
     }
-  }
-  
-  class Boss {}
+//    detectCollisionBulletAlien(alienInstance){
+//        if (
+//            this.domElement.positionX < alienInstance.positionX + alienInstance.width &&
+//            this.domElement.positionX + this.domElement.width > alienInstance.positionX &&
+//            this.domElement.positionY < alienInstance.positionY + alienInstance.height &&
+//            this.domElement.height + this.domElement.positionY > alienInstance.positionY
+//        ) {
+//            console.log("tango down....")
+//        }
+//  }
+}
+  //class Boss {}
   
   
   const game = new Game();
