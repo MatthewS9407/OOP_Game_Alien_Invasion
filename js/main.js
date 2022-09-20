@@ -12,7 +12,7 @@ class Game {
         const spawnAliens = setInterval(() => {
             const newAlien = new Alien();
             this.aliens.push(newAlien);
-        }, 1500)
+        }, 2000)
 
        
 
@@ -29,6 +29,13 @@ class Game {
             clearInterval(spawnAliens);
         }, 60000)
 
+        setInterval(() => {
+            this.bullets.forEach((bulletInstance) => {
+                bulletInstance.shoot();
+                this.bulletOutside(bulletInstance);
+            });
+        }, 100)
+
     }
     attachEventListeners(){
         document.addEventListener("keydown", (event) => {
@@ -42,15 +49,12 @@ class Game {
             if(event.key === " ") {
                 const newBullet = this.player.fire();
                 this.bullets.push(newBullet);
-                setInterval(() => {
-                this.bullets.forEach((bulletInstance) => {
-                    bulletInstance.shoot();
-                    this.bulletOutside(bulletInstance);
-                });
-            }, 100)
             }
         })
+        
     }
+    
+    
     detectCollisionPlayerAlien(alienInstance){
         if (
             this.player.positionX < alienInstance.positionX + alienInstance.width &&
@@ -65,17 +69,15 @@ class Game {
     
     detectCollisionBulletAlien(alienInstance){
         this.bullets.forEach((bulletInstance) => {
-        if (
-            bulletInstance.positionX < alienInstance.positionX + alienInstance.width &&
+        if (bulletInstance.positionX < alienInstance.positionX + alienInstance.width &&
             bulletInstance.positionX + bulletInstance.width > alienInstance.positionX &&
             bulletInstance.positionY < alienInstance.positionY + alienInstance.height &&
-            bulletInstance.height + bulletInstance.positionY > alienInstance.positionY
-        ){
-            console.log("hit");
+            bulletInstance.height + bulletInstance.positionY > alienInstance.positionY)
+            {
             alienInstance.domElement.remove();
-            this.aliens.shift();
             bulletInstance.domElement.remove();
-            this.bullets.shift();
+            //this.bullets.shift();
+            //this.aliens.shift();
         }
     })
     }
@@ -96,10 +98,10 @@ class Game {
 
 class Player {
     constructor (){
-        this.width = 10;
-        this.height = 10;
+        this.width = 8;
+        this.height = 14;
         this.positionX = 50;
-        this.positionY = 5;
+        this.positionY = 0;
         this.domElement = null;
         this.time = 0;
         this.createDomElement();
@@ -117,13 +119,13 @@ class Player {
     }
     moveLeft(){
         if (this.positionX > 0) {
-            this.positionX = this.positionX - 2;
+            this.positionX = this.positionX - 3;
             this.domElement.style.left = this.positionX + 'vw';
         }
     }
     moveRight(){
-        if (this.positionX < 89.5) {
-            this.positionX = this.positionX + 2;
+        if (this.positionX < 92) {
+            this.positionX = this.positionX + 3;
             this.domElement.style.left = this.positionX + "vw";
         }
     }
@@ -135,8 +137,8 @@ class Player {
   
   class Alien {
     constructor(){
-        this.width = 2.5;
-        this.height = 2.5;
+        this.width = 3;
+        this.height = 5;
         this.positionX = Math.floor(Math.random() * (100 - this.width + 1));
         this.positionY = 90;
         this.domElement = null;
@@ -162,10 +164,10 @@ class Player {
   
   class Bullet {
     constructor(position){
-        this.width = 2.5;
+        this.width = 0.5;
         this.height = 2.5;
-        this.positionX = position + 2.5;
-        this.positionY = 5;
+        this.positionX = position + 3.7;
+        this.positionY = 14;
         this.domElement = null;
   
         this.createDomElement();
@@ -182,9 +184,8 @@ class Player {
         boardElm.appendChild(this.domElement);
     }
     shoot(){
-        this.positionY = this.positionY + 2;
+        this.positionY = this.positionY + 3;
         this.domElement.style.bottom = this.positionY + 'vh';
-        console.log('shoot')
     }
 
 }

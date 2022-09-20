@@ -1,25 +1,56 @@
-body {
+#body-index {
     margin: 0;
     padding: 0;
+    
+}
+#body-gameover{
+    margin: 0;
+    padding: 0;
+    background-image: url("./images/vecteezy_dystopian-world-background-concept_9568588.jpg");
+    background-size: 100%;
 }
 
 #board {
     height: 100vh;
     background-color: rgba(30, 10, 82, 0.945);
     position: relative;
+    background-image: url("./images/breathtaking-shot-sea-dark-purple-sky-filled-with-stars.jpg");
+    background-size: 100%;
+    background-position: 100%;
+}
+
+h1 {
+    text-align: center;
+    padding-top: 15%;
+    font-size: 50px;
+    color: rgb(239, 8, 8);
+}
+
+#play-again {
+    text-align: center;
+    padding-left: 46%;
+    text-decoration: none;
+    color: aqua;
 }
 
 #player {
-    background-color: aliceblue;
+    background-color: none;
     position: absolute;
+    background-image: url(./images/tank.png);
+    background-size: 100%;
+    background-position: 100%;
 }
 
 .alien {
-    background-color: aquamarine;
+    background-color: none;
     position:absolute;
+    background-image: url("./images/ufo.png");
+    background-size: 100%;
+    background-position: 100%;
 }
 
 .bullet {
-    background-color: yellow;
+    background-color: rgb(200, 200, 19);
     position: absolute;
+    
 }
