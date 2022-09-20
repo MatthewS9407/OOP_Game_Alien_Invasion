@@ -14,10 +14,13 @@ class Game {
             this.aliens.push(newAlien);
         }, 1500)
 
+       
+
         setInterval(() => {
             this.aliens.forEach((alienInstance) => {
                 alienInstance.moveDown();
-                this.detectCollisionPlayerAlien(alienInstance); 
+                this.detectCollisionPlayerAlien(alienInstance);
+                this.detectCollisionBulletAlien(alienInstance); 
                 this.alienOutside(alienInstance); 
             });
         }, 50);
@@ -60,6 +63,23 @@ class Game {
         }
     }
     
+    detectCollisionBulletAlien(alienInstance){
+        this.bullets.forEach((bulletInstance) => {
+        if (
+            bulletInstance.positionX < alienInstance.positionX + alienInstance.width &&
+            bulletInstance.positionX + bulletInstance.width > alienInstance.positionX &&
+            bulletInstance.positionY < alienInstance.positionY + alienInstance.height &&
+            bulletInstance.height + bulletInstance.positionY > alienInstance.positionY
+        ){
+            console.log("hit");
+            alienInstance.domElement.remove();
+            this.aliens.shift();
+            bulletInstance.domElement.remove();
+            this.bullets.shift();
+        }
+    })
+    }
+
     alienOutside(alienInstance){
         if(alienInstance.positionY < 0){
             alienInstance.domElement.remove();
@@ -115,7 +135,7 @@ class Player {
   
   class Alien {
     constructor(){
-        this.width = 5;
+        this.width = 2.5;
         this.height = 2.5;
         this.positionX = Math.floor(Math.random() * (100 - this.width + 1));
         this.positionY = 90;
@@ -142,9 +162,9 @@ class Player {
   
   class Bullet {
     constructor(position){
-        this.width = 0.5;
-        this.height = 2;
-        this.positionX = position + 5;
+        this.width = 2.5;
+        this.height = 2.5;
+        this.positionX = position + 2.5;
         this.positionY = 5;
         this.domElement = null;
   
