@@ -18,7 +18,6 @@ class Game {
             this.aliens.forEach((alienInstance) => {
                 alienInstance.moveDown();
                 this.detectCollisionPlayerAlien(alienInstance); 
-                //this.detectCollisionBulletAlien(alienInstance);
                 this.alienOutside(alienInstance); 
             });
         }, 50);
@@ -38,9 +37,7 @@ class Game {
         });
         document.addEventListener("keydown", (event) => {
             if(event.key === " ") {
-                //this.player.fire();
-                //const newBullet = new Bullet(this.player.positionX)
-                const newBullet = new Bullet;
+                const newBullet = this.player.fire();
                 this.bullets.push(newBullet);
                 setInterval(() => {
                 this.bullets.forEach((bulletInstance) => {
@@ -62,17 +59,7 @@ class Game {
             //location.href = 'gameover.html';
         }
     }
-    //detectCollisionBulletAlien(alienInstance){
-    //    let 'bulletElm' = getElementByClassName('bullet');
-    //        if (
-    //            bulletElm.positionX < alienInstance.positionX + alienInstance.width &&
-    //            bulletElm.positionX + bulletElm.width > alienInstance.positionX &&
-    //            bulletElm.positionY < alienInstance.positionY + alienInstance.height &&
-    //            bulletElm.height + bulletElm.positionY > alienInstance.positionY
-    //        ) {
-    //            console.log("hit....")
-    //        }
-    //  }
+    
     alienOutside(alienInstance){
         if(alienInstance.positionY < 0){
             alienInstance.domElement.remove();
@@ -120,10 +107,10 @@ class Player {
             this.domElement.style.left = this.positionX + "vw";
         }
     }
-    //fire(){
-    //    const newBullet = new Bullet(this.positionX)
-    //    
-    //}
+    fire(){
+        const newBullet = new Bullet(this.positionX)
+        return newBullet
+    }
   }
   
   class Alien {
@@ -157,8 +144,8 @@ class Player {
     constructor(position){
         this.width = 0.5;
         this.height = 2;
-        this.positionX = 5;
-        this.positionY = 1;
+        this.positionX = position + 5;
+        this.positionY = 5;
         this.domElement = null;
   
         this.createDomElement();
@@ -171,24 +158,15 @@ class Player {
         this.domElement.style.bottom = this.positionY + 'vh';
         this.domElement.style.left = this.positionX + 'vw';
   
-        const playerElm = document.getElementById('player');
-        playerElm.appendChild(this.domElement);
+        const boardElm = document.getElementById('board');
+        boardElm.appendChild(this.domElement);
     }
     shoot(){
-        this.positionY = this.positionY + 3;
+        this.positionY = this.positionY + 2;
         this.domElement.style.bottom = this.positionY + 'vh';
         console.log('shoot')
     }
-//    detectCollisionBulletAlien(alienInstance){
-//        if (
-//            this.domElement.positionX < alienInstance.positionX + alienInstance.width &&
-//            this.domElement.positionX + this.domElement.width > alienInstance.positionX &&
-//            this.domElement.positionY < alienInstance.positionY + alienInstance.height &&
-//            this.domElement.height + this.domElement.positionY > alienInstance.positionY
-//        ) {
-//            console.log("tango down....")
-//        }
-//  }
+
 }
   //class Boss {}
   
