@@ -11,10 +11,11 @@ class Game {
     start(){
         this.player = new Player();
         this.attachEventListeners();
+        
 
         document.addEventListener("keydown", (event) => {
             if(event.key === "Enter"){
-
+                //document.getElementById("lives") = this.lives.innerHTML
                 document.getElementById("intro").remove();
 
                 const spawnAliens = setInterval(() => {
@@ -33,7 +34,7 @@ class Game {
         
                 setTimeout ( () => {
                     clearInterval(spawnAliens);
-                }, 60000)
+                }, 120000)
         
                 setInterval(() => {
                     this.bullets.forEach((bulletInstance) => {
@@ -73,8 +74,9 @@ class Game {
             console.log("game over....")
             alienInstance.domElement.remove();
             this.lives - 1;
-            console.log(this.lives)
             this.gameOver();
+            return document.getElementById("lives").innerHTML = this.lives;
+            
         }
     }
     
@@ -98,8 +100,9 @@ class Game {
             alienInstance.domElement.remove();
             this.aliens.shift();
             this.lives--;
-            console.log(this.lives)
             this.gameOver();
+            return document.getElementById("lives").innerHTML = this.lives;
+            
         }
     }
 
