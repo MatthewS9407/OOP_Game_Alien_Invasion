@@ -1,42 +1,49 @@
 class Game {
     constructor(){
-        this.time = 0
+        this.scoreNo = document.getElementById("score")
         this.player = null;
         this.aliens = [];
         this.bullets = [];
     }
+
     start(){
         this.player = new Player();
         this.attachEventListeners();
 
-        const spawnAliens = setInterval(() => {
-            const newAlien = new Alien();
-            this.aliens.push(newAlien);
-        }, 2000)
+        document.addEventListener("keydown", (event) => {
+            if(event.key === "Enter"){
 
-       
+                document.getElementById("intro").remove();
 
-        setInterval(() => {
-            this.aliens.forEach((alienInstance) => {
-                alienInstance.moveDown();
-                this.detectCollisionPlayerAlien(alienInstance);
-                this.detectCollisionBulletAlien(alienInstance); 
-                this.alienOutside(alienInstance); 
-            });
-        }, 50);
-
-        setTimeout ( () => {
-            clearInterval(spawnAliens);
-        }, 60000)
-
-        setInterval(() => {
-            this.bullets.forEach((bulletInstance) => {
-                bulletInstance.shoot();
-                this.bulletOutside(bulletInstance);
-            });
-        }, 100)
-
+                const spawnAliens = setInterval(() => {
+                    const newAlien = new Alien();
+                    this.aliens.push(newAlien);
+                }, 2000)       
+        
+                setInterval(() => {
+                    this.aliens.forEach((alienInstance) => {
+                        alienInstance.moveDown();
+                        this.detectCollisionPlayerAlien(alienInstance);
+                        this.detectCollisionBulletAlien(alienInstance); 
+                        this.alienOutside(alienInstance); 
+                    });
+                }, 50);
+        
+                setTimeout ( () => {
+                    clearInterval(spawnAliens);
+                }, 60000)
+        
+                setInterval(() => {
+                    this.bullets.forEach((bulletInstance) => {
+                        bulletInstance.shoot();
+                        this.bulletOutside(bulletInstance);
+                    });
+                }, 100)
+        
+            }
+        })        
     }
+
     attachEventListeners(){
         document.addEventListener("keydown", (event) => {
             if(event.key === "ArrowLeft"){
@@ -54,7 +61,10 @@ class Game {
         
     }
     
-    
+    //scoreCount(){
+    //    let score = document.getElementById("score");
+    //    score.innerHTML = this.scoreNo;
+    //}
     detectCollisionPlayerAlien(alienInstance){
         if (
             this.player.positionX < alienInstance.positionX + alienInstance.width &&
@@ -76,6 +86,7 @@ class Game {
             {
             alienInstance.domElement.remove();
             bulletInstance.domElement.remove();
+            this.scoreNo += 5;
             //this.bullets.shift();
             //this.aliens.shift();
         }

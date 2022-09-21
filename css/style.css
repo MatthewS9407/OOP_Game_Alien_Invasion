@@ -39,6 +39,8 @@ h1 {
     background-image: url(./images/tank.png);
     background-size: 100%;
     background-position: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .alien {
@@ -53,4 +55,37 @@ h1 {
     background-color: rgb(200, 200, 19);
     position: absolute;
     
+}
+#lives-text {
+    color: whitesmoke;
+    margin-left: 5px;
+    margin-top: 5px;
+    text-align: center;
+}
+#score-text {
+    color: whitesmoke;
+    margin: 0;
+    padding-top: 20px;
+    text-align: center;
+}
+#intro {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    /*background-color: aqua;*/
+}
+.heading {
+    text-align: center;
+    margin: 0;
+    line-height: 2;
+    font-size: 1.5em;
+    color: white;
+}
+#h1 {
+    margin:0;
+}
+#enter {
+    margin: 0;
+    padding-bottom: 30px;
+    color: rgb(91, 182, 20);
 }
