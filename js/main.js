@@ -1,7 +1,9 @@
 class Game {
     constructor(){
-        this.scoreNo = document.getElementById("score")
+        this.counterLives = document.getElementById("counter");
+        this.counter = counter;
         this.player = null;
+        this.lives = 3;
         this.aliens = [];
         this.bullets = [];
     }
@@ -18,8 +20,8 @@ class Game {
                 const spawnAliens = setInterval(() => {
                     const newAlien = new Alien();
                     this.aliens.push(newAlien);
-                }, 2000)       
-        
+                }, 2000)             
+
                 setInterval(() => {
                     this.aliens.forEach((alienInstance) => {
                         alienInstance.moveDown();
@@ -61,10 +63,6 @@ class Game {
         
     }
     
-    //scoreCount(){
-    //    let score = document.getElementById("score");
-    //    score.innerHTML = this.scoreNo;
-    //}
     detectCollisionPlayerAlien(alienInstance){
         if (
             this.player.positionX < alienInstance.positionX + alienInstance.width &&
@@ -73,7 +71,10 @@ class Game {
             this.player.height + this.player.positionY > alienInstance.positionY
         ) {
             console.log("game over....")
-            //location.href = 'gameover.html';
+            alienInstance.domElement.remove();
+            this.lives - 1;
+            console.log(this.lives)
+            this.gameOver();
         }
     }
     
@@ -86,7 +87,6 @@ class Game {
             {
             alienInstance.domElement.remove();
             bulletInstance.domElement.remove();
-            this.scoreNo += 5;
             //this.bullets.shift();
             //this.aliens.shift();
         }
@@ -97,12 +97,22 @@ class Game {
         if(alienInstance.positionY < 0){
             alienInstance.domElement.remove();
             this.aliens.shift();
+            this.lives--;
+            console.log(this.lives)
+            this.gameOver();
         }
     }
+
     bulletOutside(bulletInstance){
         if(bulletInstance.positionY > 100){
             bulletInstance.domElement.remove();
             this.bullets.shift();
+        }
+    }
+    gameOver(){
+        if(this.lives === 0 || this.lives < 0){
+        location.href = 'gameover.html';
+        console.log("game over")
         }
     }
 }
@@ -114,9 +124,12 @@ class Player {
         this.positionX = 50;
         this.positionY = 0;
         this.domElement = null;
-        this.time = 0;
         this.createDomElement();
     }
+    //livesCount(){
+    //    let lives = document.getElementById("lives");
+    //    lives.innerHTML = this.lives;
+    //}
     createDomElement(){
         this.domElement = document.createElement('div');
         this.domElement.id = 'player';
@@ -148,8 +161,8 @@ class Player {
   
   class Alien {
     constructor(){
-        this.width = 3;
-        this.height = 5;
+        this.width = 4;
+        this.height = 6.5;
         this.positionX = Math.floor(Math.random() * (100 - this.width + 1));
         this.positionY = 90;
         this.domElement = null;
@@ -199,9 +212,7 @@ class Player {
         this.domElement.style.bottom = this.positionY + 'vh';
     }
 
-}
-  //class Boss {}
-  
-  
+  }
   const game = new Game();
+  
   game.start();
