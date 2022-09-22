@@ -1,7 +1,5 @@
 class Game {
     constructor(){
-        this.counterLives = document.getElementById("counter");
-        this.counter = counter;
         this.player = null;
         this.lives = 3;
         this.score = 0;
@@ -21,7 +19,7 @@ class Game {
                 const spawnAliens = setInterval(() => {
                     const newAlien = new Alien();
                     this.aliens.push(newAlien);
-                }, 2000)             
+                }, 1500)             
 
                 setInterval(() => {
                     this.aliens.forEach((alienInstance) => {
@@ -119,7 +117,7 @@ class Game {
     gameOver(){
         if(this.lives === 0 || this.lives < 0){
         location.href = 'gameover.html';
-        console.log("game over")
+        //return document.getElementById("final-score").innerHTML = this.score;
         }
     }
 }
