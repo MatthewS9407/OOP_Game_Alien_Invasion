@@ -4,6 +4,7 @@ class Game {
         this.counter = counter;
         this.player = null;
         this.lives = 3;
+        this.score = 0;
         this.aliens = [];
         this.bullets = [];
     }
@@ -15,7 +16,6 @@ class Game {
 
         document.addEventListener("keydown", (event) => {
             if(event.key === "Enter"){
-                //document.getElementById("lives") = this.lives.innerHTML
                 document.getElementById("intro").remove();
 
                 const spawnAliens = setInterval(() => {
@@ -32,9 +32,9 @@ class Game {
                     });
                 }, 50);
         
-                setTimeout ( () => {
-                    clearInterval(spawnAliens);
-                }, 120000)
+               // setTimeout ( () => {
+               //     clearInterval(spawnAliens);
+               // }, 120000)
         
                 setInterval(() => {
                     this.bullets.forEach((bulletInstance) => {
@@ -89,8 +89,12 @@ class Game {
             {
             alienInstance.domElement.remove();
             bulletInstance.domElement.remove();
-            //this.bullets.shift();
-            //this.aliens.shift();
+            this.bullets.shift();
+            this.aliens.shift();
+            this.score++ ;
+            this.lives;
+            return document.getElementById("score").innerHTML = this.score;
+            
         }
     })
     }
