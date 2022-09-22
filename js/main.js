@@ -11,38 +11,43 @@ class Game {
         this.player = new Player();
         this.attachEventListeners();
         
-
-        document.addEventListener("keydown", (event) => {
-            if(event.key === "Enter"){
-                document.getElementById("intro").remove();
-
-                const spawnAliens = setInterval(() => {
-                    const newAlien = new Alien();
-                    this.aliens.push(newAlien);
-                }, 1500)             
-
-                setInterval(() => {
-                    this.aliens.forEach((alienInstance) => {
-                        alienInstance.moveDown();
-                        this.detectCollisionPlayerAlien(alienInstance);
-                        this.detectCollisionBulletAlien(alienInstance); 
-                        this.alienOutside(alienInstance); 
-                    });
-                }, 50);
         
-               // setTimeout ( () => {
-               //     clearInterval(spawnAliens);
-               // }, 120000)
-        
-                setInterval(() => {
-                    this.bullets.forEach((bulletInstance) => {
-                        bulletInstance.shoot();
-                        this.bulletOutside(bulletInstance);
-                    });
-                }, 100)
-        
-            }
-        })        
+
+       document.addEventListener("keypress", (event) => {
+           if(event.key === "Enter"){
+               document.getElementById("intro").remove();
+
+               const spawnAliens = setInterval(() => {
+                   const newAlien = new Alien();
+                   this.aliens.push(newAlien);
+               }, 2000)             
+
+               setInterval(() => {
+                   this.aliens.forEach((alienInstance) => {
+                       alienInstance.moveDown();
+                       this.detectCollisionPlayerAlien(alienInstance);
+                       this.detectCollisionBulletAlien(alienInstance); 
+                       this.alienOutside(alienInstance); 
+                       setTimeout ( () => {
+                        alienInstance.domElement.remove();
+                    }, 4100)
+                   });
+               }, 50);
+       
+               
+       
+               setInterval(() => {
+                   this.bullets.forEach((bulletInstance) => {
+                       bulletInstance.shoot();
+                       this.bulletOutside(bulletInstance);
+                       setTimeout ( () => {
+                        bulletInstance.domElement.remove();
+                    }, 4100)
+                   });
+               }, 50)
+       
+           }
+       })        
     }
 
     attachEventListeners(){
@@ -53,7 +58,7 @@ class Game {
                 this.player.moveRight();
             }
         });
-        document.addEventListener("keydown", (event) => {
+        document.addEventListener("keypress", (event) => {
             if(event.key === " ") {
                 const newBullet = this.player.fire();
                 this.bullets.push(newBullet);
@@ -69,7 +74,6 @@ class Game {
             this.player.positionY < alienInstance.positionY + alienInstance.height &&
             this.player.height + this.player.positionY > alienInstance.positionY
         ) {
-            console.log("game over....")
             alienInstance.domElement.remove();
             this.lives - 1;
             this.gameOver();
@@ -85,12 +89,11 @@ class Game {
             bulletInstance.positionY < alienInstance.positionY + alienInstance.height &&
             bulletInstance.height + bulletInstance.positionY > alienInstance.positionY)
             {
-            alienInstance.domElement.remove();
-            bulletInstance.domElement.remove();
             this.bullets.shift();
             this.aliens.shift();
+            alienInstance.domElement.remove();
+            bulletInstance.domElement.remove();
             this.score++ ;
-            this.lives;
             return document.getElementById("score").innerHTML = this.score;
             
         }
@@ -99,25 +102,26 @@ class Game {
 
     alienOutside(alienInstance){
         if(alienInstance.positionY < 0){
-            alienInstance.domElement.remove();
+            
             this.aliens.shift();
+            alienInstance.domElement.remove();
             this.lives--;
             this.gameOver();
             return document.getElementById("lives").innerHTML = this.lives;
-            
         }
+        
     }
 
+
     bulletOutside(bulletInstance){
-        if(bulletInstance.positionY > 100){
-            bulletInstance.domElement.remove();
+        if(bulletInstance.positionY >= 100){
             this.bullets.shift();
+            bulletInstance.domElement.remove();
         }
     }
     gameOver(){
         if(this.lives === 0 || this.lives < 0){
         location.href = 'gameover.html';
-        //return document.getElementById("final-score").innerHTML = this.score;
         }
     }
 }
@@ -131,10 +135,7 @@ class Player {
         this.domElement = null;
         this.createDomElement();
     }
-    //livesCount(){
-    //    let lives = document.getElementById("lives");
-    //    lives.innerHTML = this.lives;
-    //}
+    
     createDomElement(){
         this.domElement = document.createElement('div');
         this.domElement.id = 'player';
@@ -213,7 +214,7 @@ class Player {
         boardElm.appendChild(this.domElement);
     }
     shoot(){
-        this.positionY = this.positionY + 3;
+        this.positionY++;
         this.domElement.style.bottom = this.positionY + 'vh';
     }
 
