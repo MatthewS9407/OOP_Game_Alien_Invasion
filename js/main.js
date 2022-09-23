@@ -214,7 +214,7 @@ class Player {
         boardElm.appendChild(this.domElement);
     }
     shoot(){
-        this.positionY++;
+        this.positionY = this.positionY + 2;
         this.domElement.style.bottom = this.positionY + 'vh';
     }
 
