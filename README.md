@@ -1,5 +1,5 @@
-# Alien Invasion
-Alien Invasion is an OOP action game that is inspired by the classic Nokia mobile game "[Space Impact](https://en.wikipedia.org/wiki/Space_Impact)".
+# Space Invaders
+Space Invaders is an OOP action game that is inspired by the classic Nokia mobile game "[Space Impact](https://en.wikipedia.org/wiki/Space_Impact)".
 
 ![screenshot](./css/images/Screenshot%202022-09-22%20at%2017.34.09.png)
 
