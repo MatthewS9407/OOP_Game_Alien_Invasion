@@ -3,7 +3,7 @@ Alien Invasion is an OOP action game that is inspired by the classic Nokia mobil
 
 ![screenshot](./css/images/Screenshot%202022-09-22%20at%2017.34.09.png)
 
-https://https://matthews9407.github.io/Space_Invaders/index.html
+https://matthews9407.github.io/Space_Invaders/index.html
 
 ## Description
 Using Object Oriented Programming and DOM Manipulaion, I recreated a basic version of one of my favourite mobile games. 
