@@ -32,20 +32,14 @@ class Game {
                         alienInstance.domElement.remove();
                     }, 4100)
                    });
-               }, 50);
-       
-               
-       
-               setInterval(() => {
                    this.bullets.forEach((bulletInstance) => {
-                       bulletInstance.shoot();
-                       this.bulletOutside(bulletInstance);
-                       setTimeout ( () => {
-                        bulletInstance.domElement.remove();
-                    }, 4100)
-                   });
-               }, 50)
-       
+                    bulletInstance.shoot();
+                    this.bulletOutside(bulletInstance);
+                    setTimeout ( () => {
+                     bulletInstance.domElement.remove();
+                 }, 4100)
+                });
+               }, 50);       
            }
        })        
     }
